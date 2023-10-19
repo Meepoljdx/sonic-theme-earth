@@ -25,7 +25,7 @@
 
 ## 安装方法
 
-1. [点击](https://github.com/hooxuu/sonic-theme-Journal/archive/master.zip)下载无额外功能的包，如果要使用完整版本，需要按照下面的说明进行Sonic代码的修改。
+1. [点击](https://github.com/Meepoljdx/sonic-theme-earth/releases/download/1.6.0/sonic-theme-earth-lite.zip)下载无额外功能的包，如果要使用完整版本，需要按照下面的说明进行Sonic代码的修改，然后[点击](https://github.com/Meepoljdx/sonic-theme-earth/releases/download/1.6.0/sonic-theme-earth.zip)下载。
 2. 进入后台 -> 外观 -> 主题。
 3. 点击右下方按钮选择安装主题，随后选择 `本地上传`。
 4. 选择下载好的主题包（zip）即可。
