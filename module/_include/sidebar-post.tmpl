@@ -1,0 +1,8 @@
+{{- define "meepo_earth/module/_include/sidebar-post" -}}
+{{/* 博文页面内的侧边栏 */}}
+  {{ if .settings.latest_posts }} {{ template "meepo_earth/module/widgets/latest-posts" .}} {{ end }}
+  {{ if .settings.popular_posts }} {{ template "meepo_earth/module/widgets/popular-posts" .}} {{ end }}
+  {{ if .settings.tags_lists }} {{ template "meepo_earth/module/widgets/tags" .}} {{ end }}
+  {{ if .settings.categories }} {{ template "meepo_earth/module/widgets/categories" .}} {{ end }}
+  {{ if .settings.profile }} {{ template "meepo_earth/module/widgets/profile" .}} {{ end }}
+{{- end -}}

@@ -1,0 +1,55 @@
+{{- define "meepo_earth/module/footer" -}}
+{{/* 这里阉割了只有一种页脚风格 */}}
+<footer class="mt-10 bg-white py-8 dark:bg-slate-800">
+  <div class="container mx-auto sm:flex sm:items-center sm:justify-between">
+    <a href="/" class="mb-4 flex items-center justify-center sm:mb-0 sm:justify-start">
+      {{ if .blog_logo }}
+        <img
+          src="{{ .blog_logo }}"
+          class="mr-3 h-8 w-8"
+          alt="Logo"
+        />
+      {{ end }}
+      <span
+        class="self-center whitespace-nowrap text-2xl font-semibold dark:text-slate-50"
+      >{{ .blog_title }}
+      </span>
+    </a>
+    {{/* 这里删除了页脚的菜单 */}}
+
+    <th:block th:replace="~{modules/footer-social}" />
+  </div>
+  {{/* 备案设置 */}}
+  <hr class="my-6 border-gray-100 dark:border-slate-700 sm:mx-auto lg:my-8" />
+  <div class="space-y-1">
+    <span class="container mx-auto block text-center text-sm text-gray-500">
+      <a
+        href="https://beian.miit.gov.cn/"
+        class="hover:underline"
+        target="_blank"
+        href="{{ .settings.icp_link }}"
+      >{{ .settings.icp_text }}</a>
+    </span>
+    {{ if .settings.gongan_text }}
+      <div
+        class="container mx-auto block text-center text-sm text-gray-500"
+      >
+        <p class="flex items-center justify-center gap-1">
+          <img src="{{ .theme_base }}/assets/images/gongan_beian.png" class="h-4 w-4" />
+          <a
+            href="https://www.beian.gov.cn/portal/registerSystemInfo"
+            class="hover:underline"
+            target="_blank"
+            href="{{.settings.gongan_link}}"
+          >{{.settings.gongan_text}}</a>
+        </p>
+      </div>
+    {{ end }}
+    <span class="container mx-auto block text-center text-sm text-gray-500 dark:text-slate-300">
+      Proudly published with <a href="https://halo.run/" target="_blank" rel="noreferrer noopener">Halo</a><br>
+      Theme <a href="" target="_blank" rel="noreferrer noopener">Earth.</a> by <a href="https://meepoljd.top/" class="hover:underline" target="_blank" rel="noreferrer noopener">Meepo</a><br>
+      &copy; {{ now.UTC.Year }} <a class="hover:underline" href="{{.blog_url}}">{{.blog_title}}</a>
+    </span>
+  </div>
+</footer>
+{{- end -}}

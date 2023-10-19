@@ -1,0 +1,125 @@
+{{- define "meepo_earth/archives" -}}
+<!DOCTYPE html>
+<html>
+  <head>
+    {{ template "meepo_earth/module/libs/import" . }}
+    <script>
+      main.initColorScheme({{ .settings.color_scheme}},{{ .settings.enable_change_color_scheme }})
+    </script>
+  </head>
+  <body class="bg-slate-50 dark:bg-slate-900">
+    {{ template "meepo_earth/module/header" . }}
+    {{ template "meepo_earth/module/hero" . }} 
+    <section class="container mx-auto mt-6 grid grid-cols-4 gap-6">
+      <div class="z-0 col-span-4 sm:col-span-3">
+        <div class="rounded-xl bg-white p-4 dark:bg-slate-800">
+          <h1 class="mb-6 text-2xl font-medium dark:text-slate-50">归档</h1>
+          <div class="flex flex-col gap-4">
+            {{ range $archive:=.archives }}
+                <div class="grid grid-cols-12 gap-4">
+                  <div class="col-span-12 sm:col-span-3">
+                    <h2
+                      class="sticky top-16 mt-2 text-lg font-medium dark:text-slate-50"
+                    >{{ $archive.Year }} 年</h2>
+                  </div>
+                  <div class="col-span-12 sm:col-span-9">
+                    {{ range $post:= $archive.Posts }}
+                      <div
+                        class="my-2 rounded border border-gray-300 bg-white shadow-sm hover:border-gray-400 hover:shadow dark:border-slate-600 dark:bg-slate-700 dark:hover:border-slate-700"
+                      >
+                        <div class="relative flex flex-col gap-2 p-4">
+                          <div class="flex min-w-0 flex-wrap items-center justify-between gap-4">
+                            <div class="col-span-7 flex flex-nowrap truncate">
+                              <a
+                                href="{{ $post.FullPath }}"
+                                class="truncate text-xl font-medium text-gray-900 hover:text-gray-500 hover:underline dark:text-slate-50 dark:hover:text-white"
+                              >{{ $post.Title }}</a>
+                            </div>
+                            <div class="col-span-3 col-start-11">
+                              <p
+                                class="truncate text-sm text-gray-600 dark:text-slate-100"
+                              >{{ unix_milli_time_format "2006-01-02" $post.CreateTime }}</p>
+                            </div>
+                          </div>
+                          {{ if or $post.Categories $post.Tags }}
+                          <div
+                            class="flex flex-wrap items-center gap-2"
+                          >
+                            {{ if (gt (len $post.Categories) 0) }}
+                            {{ $category := (index $post.Categories 0) }}
+                            <a
+                              href="{{ $category.FullPath }}"
+                              title="{{ $category.Name }}"
+                              class="mr-1 text-sm font-medium text-gray-800 hover:text-gray-900 dark:text-slate-500 dark:hover:text-slate-600"
+                            >{{ $category.Name }}
+                            </a>
+                            {{ end }}
+                            {{ range $tag := $post.Tags }}
+                            <a
+                              href="{{ $tag.FullPath }}"
+                              title="{{ $tag.Name }}"
+                              class="cursor-pointer text-sm italic text-gray-600 hover:text-gray-900 dark:text-slate-400 dark:hover:text-slate-500"
+                            >{{ $tag.Name }}
+                            </a>
+                            {{ end }}
+                          </div>
+                          {{ end }}
+                          <div class="text-sm font-light line-clamp-6 dark:text-slate-200">
+                            {{ $post.Summary }}
+                          </div>
+                        </div>
+                      </div>
+                    {{ end }}                   
+                  </div>
+                </div>
+            {{ end }}
+          </div>
+          {{ if not .archives }}
+            <div class="mt-6 flex items-center justify-center">
+              <span class="text-sm font-light text-gray-600">当前没有文章</span>
+            </div>
+          {{ end }}
+          {{ if (gt .posts.Pages 1) }}
+          <div class="mt-6 flex items-center justify-between">
+            {{ $pagination:=(archivesPagination .posts.PageNum .posts.Pages 3) }}
+            {{ if $pagination.HasPrev}}
+            <a
+              href="{{ $pagination.PrevPageFullPath }}"
+              class="whitespace-no-wrap group inline-flex items-center justify-center gap-1 rounded-md border border-gray-200 bg-white px-4 py-1 text-sm font-medium leading-6 text-gray-600 shadow-sm hover:bg-gray-50 focus:shadow-none focus:outline-none dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600 dark:hover:text-white"
+            >
+              <span class="i-tabler-arrow-left text-lg transition-all group-hover:-translate-x-1"></span>
+              <span>上一页</span>
+            </a>
+            {{ end }}
+            <span
+              class="text-sm text-gray-900 dark:text-slate-50"
+            >{{add .posts.PageNum 1}}/{{ .posts.Pages}}</span>
+            {{ if $pagination.HasNext }}
+            <a
+              href="{{ $pagination.NextPageFullPath }}"
+              class="whitespace-no-wrap group inline-flex items-center justify-center gap-1 rounded-md border border-gray-200 bg-white px-4 py-1 text-sm font-medium leading-6 text-gray-600 shadow-sm hover:bg-gray-50 focus:shadow-none focus:outline-none dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 dark:hover:bg-slate-600 dark:hover:text-white"
+            >
+              <span>下一页</span>
+              <span class="i-tabler-arrow-right text-lg transition-all group-hover:translate-x-1"></span>
+            </a>
+            {{ end }}
+          </div>
+          {{ end }}
+
+          
+        </div>
+      </div>
+      
+
+      <aside class="z-0 col-span-1 hidden h-full flex-col gap-6 sm:flex">
+      {{ template "meepo_earth/module/_include/sidebar-post" .}}
+      </aside>
+    {{/* 博文清单 */}}
+    </section>
+    {{ template "meepo_earth/module/footer" . }}
+  
+    
+  </body>
+</html>
+
+{{end}}

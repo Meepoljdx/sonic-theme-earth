@@ -1,0 +1,65 @@
+{{- define "meepo_earth/module/post-list" -}}
+{{ $postCount := (len .posts.Content) }}
+  {{ if (gt $postCount 0) }}
+  <div id="post-list" class='mt-6 grid grid-cols-1 gap-6 {{ if eq .settings.post_list_layout "grid_3" }} md:grid-cols-2 xl:grid-cols-3 {{ else if eq .settings.post_list_layout "grid_2" }} md:grid-cols-2 {{ end }}'>
+    {{ range $post:=.posts.Content}}
+    {{/* 此处$post为*dto.Post */}}
+    <div
+      class="group flex flex-col overflow-hidden hover:ring-2 rounded-xl hover:-translate-y-1 bg-white shadow-md ring-black transition-all duration-500 hover:shadow-lg dark:bg-slate-800 dark:ring-slate-700">
+      {{ if and $post.Thumbnail }}
+      <div class="aspect-w-16 aspect-h-9">
+        <a href="{{ $post.FullPath }}" title="{{ $post.Title }}">
+          <img src="{{ $post.Thumbnail }}" alt="{{ $post.Title }}"
+            class="h-full w-full object-cover transition-all duration-500 group-hover:scale-105" />
+        </a>
+        {{ if $post.Topped }}
+        <div class="absolute !top-1.5 !left-2" title="置顶">
+          <div class="i-bx-arrow-to-top !h-5 !w-5 text-sky-600"></div>
+        </div>
+        {{ end }}
+      </div>
+      {{ end }}
+      <div class="relative flex flex-col gap-2 p-4">
+        {{ if or $post.Categories $post.Tags }}
+        <div class="flex flex-wrap items-center gap-2">
+          {{ if (gt (len $post.Categories) 0) }}
+            {{ $firstCategory := (index $post.Categories 0) }}
+            <a href="{{ $firstCategory.FullPath }}" title="{{ $firstCategory.Name }}"
+              class="mr-1 text-sm font-medium text-gray-800 hover:text-gray-900 dark:text-slate-500 dark:hover:text-slate-600">
+              {{ $firstCategory.Name }}</a>
+          {{ end }}
+          {{ if (gt (len $post.Tags) 0) }}
+            {{ range $tag := $post.Tags }}
+            <a tag="{{ $tag.FullPath }}" title="{{ $tag.Name }}"
+              class="cursor-pointer text-sm italic text-gray-600 hover:text-gray-900 dark:text-slate-400 dark:hover:text-slate-500">
+              {{ $tag.Name }}</a>
+            {{ end }}
+          {{ end }}
+        </div>
+        {{ end }}
+        <h1
+          class='cursor-pointer text-2xl font-medium transition-all line-clamp-2 hover:text-gray-500 hover:underline dark:text-slate-50 dark:hover:text-white {{ if eq $.settings.post_list_layout "grid_3" }} sm:line-clamp-4 {{ else if eq $.settings.post_list_layout "grid_2" }} sm:line-clamp-3 {{ end }}'>
+          <a href="{{ $post.FullPath }}" th:title="{{ $post.Title }}">{{ $post.Title }}</a>
+        </h1>
+        <p class='font-sm font-light line-clamp-6 dark:text-slate-200 {{ if eq $.settings.post_list_layout " grid_3" }} sm:line-clamp-8 {{ end }}'>{{ $post.Summary }}
+        </p>
+        <div class="mt-4 flex flex-1 items-center justify-start gap-2">
+          <a href="{{ $.blog_url }}" title="{{ $.user.Nickname}}">
+            <img src="{{ $.user.Avatar }}" title="{{ $.user.Nickname}}" alt="{{ $.user.Nickname}}"
+              class="h-8 w-8 rounded-full border drop-shadow-sm dark:border-slate-700" />
+          </a>
+          <a href="{{ $.blog_url }}" th:title="{{ $.user.Nickname}}"
+            class="text-sm font-medium text-gray-900 hover:text-gray-600 dark:text-slate-100 dark:hover:text-slate-200">{{ $.user.Nickname}}</a>
+          <span class="text-sm tabular-nums text-gray-600 dark:text-slate-300">发布于 {{unix_milli_time_format "2006-01-02" .CreateTime}}
+          </span>
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+  {{ else }}
+  <div class="mt-6 flex items-center justify-center">
+    <span class="text-sm font-light text-gray-600 dark:text-slate-200">此分类下没有文章</span>
+  </div>
+  {{ end }}
+{{- end -}}

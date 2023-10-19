@@ -1,0 +1,22 @@
+{{- define "meepo_earth/module/category-tree" -}}
+    <ul class="my-3 ml-3 space-y-1 border-l pl-2">
+      {{ $postCount := listCategory }}
+      {{ range $category:=.Children }} 
+        <li>
+          <a
+          href="{{ $category.FullPath }}"
+          title="{{ $category.Name }}"
+          class="group flex items-center justify-between rounded py-1 px-1.5 transition-all hover:bg-gray-100 dark:hover:bg-slate-700"
+          >
+          <span class="text-sm opacity-80 dark:text-slate-50">{{ $category.Name }}</span>
+          <span class="rounded bg-gray-100 py-0.5 px-1 text-xs tabular-nums opacity-70 group-hover:bg-white dark:bg-slate-600 dark:text-slate-50 dark:group-hover:bg-slate-500">
+          {{ range $categoryWithPost := $postCount }} {{ if (eq $categoryWithPost.ID $category.ID) }} {{ $categoryWithPost.PostCount }} {{ end }} {{ end }}
+          </span>
+          </a>
+          {{ if $category.Children }}
+            {{ template "meepo_earth/module/category-tree" . }}
+          {{end}}
+        </li>
+      {{end}}
+    </ul>
+{{- end -}}

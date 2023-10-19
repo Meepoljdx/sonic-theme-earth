@@ -1,0 +1,26 @@
+{{- define  "meepo_earth/module/layout" -}}
+<!DOCTYPE html>
+<html lang="zh"> 
+  <head>
+    {{ template "meepo_earth/module/libs/import" . }}
+    <script>
+      main.initColorScheme({{ .settings.color_scheme}},{{ .settings.enable_change_color_scheme }})
+    </script>
+  </head>
+  <body class="bg-slate-50 dark:bg-slate-900">
+    {{ template "meepo_earth/module/header" . }}
+    {{ template "meepo_earth/module/hero" . }} 
+    <section class="container mx-auto mt-6 grid grid-cols-4 gap-6">
+      <div class="z-0 col-span-4 sm:col-span-3">
+        {{ template "meepo_earth/module/category-filter" . }}
+        {{ template "meepo_earth/module/post-list" . }}
+      </div>
+      <aside class="z-0 col-span-1 hidden h-full flex-col gap-6 sm:flex">
+      {{ template "meepo_earth/module/_include/sidebar-post" .}}
+      </aside>
+    {{/* 博文清单 */}}
+    </section>
+    {{ template "meepo_earth/module/footer" . }}
+  </body>
+</html>
+{{- end -}}

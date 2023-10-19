@@ -1,0 +1,22 @@
+{{- define "meepo_earth/module/tag-filter" -}}
+<div class="flex flex-col gap-4">
+  <h2 class="inline-flex items-center gap-2 text-base text-gray-900 dark:text-slate-50">
+    <span class="i-tabler-tags text-lg"></span>
+    所有标签
+  </h2>
+  {{ $tags:= getAllTag }}
+  <div class="flex flex-wrap gap-2">
+    {{ range $index, $tag := $tags}}
+    <a
+      th:each="tagItem,tagStat: ${tags}"
+      href="{{ $tag.FullPath }}"
+      title="{{ $tag.Name }}"
+      class="rounded bg-gray-100 px-1 py-0.5 text-sm text-gray-900 hover:bg-gray-200 dark:bg-slate-600 dark:text-slate-50 dark:hover:bg-slate-700 dark:hover:text-slate-100{{ if and (not $.tag) (eq $index 0) }} '!bg-gray-200 dark:!bg-slate-700 dark:!text-slate-100 ring-2 ring-gray-300 dark:ring-slate-600' {{ end }}"
+    >
+      #{{ $tag.Name }}
+      <sup>{{ $tag.PostCount }}</sup>
+    </a>
+    {{ end }}
+  </div>
+</div>
+{{- end -}}

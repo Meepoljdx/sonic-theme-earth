@@ -1,0 +1,11 @@
+id: meepo_earth
+name: Earth
+author:
+  name: Meepo
+  website: https://meepoljd.top
+description: halo-theme-earth for go-sonic
+logo: https://avatars.githubusercontent.com/u/63089130?s=400&v=4
+website: https://github.com/go-sonic/default-theme-anatole
+repo: https://github.com/go-sonic/default-theme-anatole
+version: 1.6.0
+require: 1.1.1

@@ -1,0 +1,174 @@
+layout:
+  label: 布局
+  items:
+    post_list_layout:
+      name: post_list_layout
+      label: 文章列表布局
+      type: select
+      data-type: string
+      default: "grid_3"
+      options:
+        - value: "grid_3"
+          label: "网格（一行三列）"
+        - value: "grid_2"
+          label: "网格（一行两列）"
+        - value: "single"
+          label: "单条"
+      description: "选择单条时，文章卡片的图片将位于左侧"
+    header_widget:
+      name: header_widget
+      label: 首页顶部模块
+      type: select
+      data-type: string
+      default: "site_title"
+      options:
+        - label: 无
+          value: none
+        - label: 最新一篇文章
+          value: latest_post
+        - label: 文章网格（最新五篇文章）
+          value: latest_post_grid
+        - label: 站点标题
+          value: site_title
+      description: "选择单条时，文章卡片的图片将位于左侧"
+    header_background_image:
+      name: header_background_image
+      label: 首页顶部背景图片
+      data-type: string
+      default: /themes/theme-earth/assets/images/default-background.png
+
+style:
+  label: 样式
+  items:
+    color_scheme:
+      name: color_scheme
+      label: 默认配色
+      type: radio
+      data-type: string
+      default: "system"
+      options:
+        - label: 跟随系统
+          value: system
+        - label: 深色
+          value: dark
+        - label: 浅色
+          value: light
+
+sidebar:
+  label: 侧边栏
+  items:
+    latest_posts:
+      name: latest_posts
+      label: 近期文章
+      type: switch
+      data-type: bool
+      default: true
+    tags_lists:
+      name: tags_lists
+      label: 标签
+      type: switch
+      default: false
+      data-type: bool
+    profile:
+      name: profile
+      label: 博客统计
+      type: switch
+      default: false
+      data-type: bool
+      description: "需要模板方法支持"
+    categories:
+      name: categories
+      label: 分类目录
+      type: switch
+      data-type: bool
+      default: true
+    popular_posts:
+      name: popular_posts
+      label: 近期文章
+      type: switch
+      default: false
+      data-type: bool
+      description: "需要模板方法支持"
+
+
+social:
+  label: 社交资料
+  items:
+    rss:
+      name: rss
+      label: RSS
+      type: radio
+      data-type: bool
+      default: true
+      options:
+        - value: true
+          label: 开启
+        - value: false
+          label: 关闭
+    twitter:
+      name: twitter
+      label: Twitter
+      type: text
+      placeholder: "只需填入 Twitter 用户名即可"
+    facebook:
+      name: facebook
+      label: Facebook
+      type: text
+      placeholder: "只需填入 Facebook 用户名即可"
+    instagram:
+      name: instagram
+      label: Instagram
+      type: text
+      placeholder: "只需填入 Instagram 用户名即可"
+    dribbble:
+      name: dribbble
+      label: Dribbble
+      type: text
+      placeholder: "只需填入 Dribbble 用户名即可"
+    weibo:
+      name: weibo
+      label: 微博
+      type: text
+      placeholder: "只需填入微博 Id 即可"
+    email:
+      name: email
+      label: Email
+      type: text
+      placeholder: "只需填入邮箱地址即可"
+    github:
+      name: github
+      label: GitHub
+      type: text
+      placeholder: "只需填入 GitHub 用户名即可"
+    qq:
+      name: qq
+      label: QQ
+      type: text
+      placeholder: "只需填入 QQ 号即可"
+    telegram:
+      name: telegram
+      label: Telegram
+      type: text
+      placeholder: "只需填入 Telegram Id 即可"
+
+beian:
+  label: 备案设置
+  items:
+    icp_text:
+      name: icp_text
+      label: ICP备案号
+      type: text
+    icp_link:
+      name: icp_link
+      label: ICP备案跳转链接
+      type: text
+      default: https://beian.miit.gov.cn/
+    gongan_text:
+      name: gongan_text
+      label: 公安联网备案号
+      type: text
+    gongan_link:
+      name: gongan_link
+      label: 公安联网备案跳转链接
+      type: text
+      default: https://www.beian.gov.cn/portal/registerSystemInfo

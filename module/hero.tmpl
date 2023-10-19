@@ -1,0 +1,27 @@
+{{- define "meepo_earth/module/hero" -}}
+<section>
+{{ if (ne .settings.header_widget "none")  }}
+  <div
+    class="bg-cover bg-center bg-no-repeat {{ if (eq .settings.header_widget "site_title") }} h-96 {{ end }} "
+    style='background-image: url("{{ .settings.header_background_image }}")'
+  >
+    {{ $postCount := getPostCount }}
+    {{ if (eq .settings.header_widget "latest_post") }}
+      {{ if (gt $postCount 0) }}
+        {{ $latestPost := (listLatestPost 1) }}
+        <div class="container mx-auto py-6">
+          {{ template "meepo_earth/module/featured-post-card" (index $latestPost 0) }}
+        </div>
+      {{end}}
+    {{ else if (eq .settings.header_widget "latest_post_grid") }}
+      {{ template "meepo_earth/module/post-card/post-list-grid" . }}
+    {{ else if (eq .settings.header_widget "site_title") }}
+        <div class="container mx-auto flex h-full flex-col items-center justify-center gap-3 py-6">
+          <span class="text-5xl text-white">{{ .blog_title }}</span>
+          <span class="text-sm font-light text-white opacity-50">{{ .user.Description }}</span>
+        </div>
+    {{ end }}
+  </div>
+{{end}}
+</section>
+{{- end -}}

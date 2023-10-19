@@ -1,0 +1,15 @@
+{{- define "meepo_earth/index" -}}
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        {{ template "meepo_earth/module/libs/import" . }}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="author" content="{{ .user.Nickname}}" />
+        <meta name="keywords" content="{{ .meta_keywords}}" />
+        <meta name="description" content="{{ .meta_description}}" />
+    </head>
+    <body>
+    {{ template "meepo_earth/module/layout" . }}
+</body>
+</html>
+{{end}}

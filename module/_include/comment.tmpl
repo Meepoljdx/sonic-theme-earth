@@ -1,0 +1,9 @@
+{{- define "meepo_earth/module/_include/comment" -}}
+    {{if or (eq .type "journal") (not .target.DisallowComment)}}
+        <script src="{{ .theme_base}}/assets/libs/vue/vue.min.js"></script>
+        <script src="{{ .theme_base}}/assets/libs/halo/halo-comment.min.js"></script>
+        {{ if (gt .target.CommentCount 0) }} <div class="comment-count"><span class="vnum"></span>{{ .target.CommentCount }} 条评论 </div> {{ end }}
+        
+        <halo-comment id="{{.target.ID}}" type="{{ .type }}" color="{{ .settings.color_scheme }}"/>
+    {{end}}
+{{- end -}}

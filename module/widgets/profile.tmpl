@@ -1,0 +1,38 @@
+{{- define "meepo_earth/module/widgets/profile" -}}
+<div
+  class="w-full cursor-pointer overflow-hidden rounded-xl bg-white p-3 shadow transition-all duration-500 hover:shadow-md dark:bg-slate-800"
+>
+
+  {{ $statis := getStatisticsData }}
+  <div class="flex flex-col items-center justify-center gap-4">
+    {{ if .blog_logo }}
+    <div class="relative h-24 w-24">
+      <img src="{{ .blog_logo }}" alt="{{ .blog_title }}" class="h-full w-full rounded-full" />
+    </div>
+    {{ end }}
+    <div><h1 class="text-2xl font-medium dark:text-slate-50">{{ .blog_title }}</h1></div>
+    <div class="grid grid-cols-4 gap-5">
+      <div class="inline-flex flex-col items-center">
+        <span class="text-xl font-medium tabular-nums text-gray-900 dark:text-slate-100" >{{ $statis.PostCount }}</span>
+        <span class="text-xs font-light text-gray-600 dark:text-slate-300">文章数</span>
+      </div>
+      <div class="inline-flex flex-col items-center">
+        <span
+          class="text-xl font-medium tabular-nums text-gray-900 dark:text-slate-100"
+        >{{ $statis.CategoryCount }}</span>
+        <span class="text-xs font-light text-gray-600 dark:text-slate-300">分类数</span>
+      </div>
+      <div class="inline-flex flex-col items-center">
+        <span
+          class="text-xl font-medium tabular-nums text-gray-900 dark:text-slate-100"
+        >{{ $statis.CommentCount }}</span>
+        <span class="text-xs font-light text-gray-600 dark:text-slate-300">评论数</span>
+      </div>
+      <div class="inline-flex flex-col items-center">
+        <span class="text-xl font-medium tabular-nums text-gray-900 dark:text-slate-100">{{ $statis.VisitCount }}</span
+        ><span class="text-xs font-light text-gray-600 dark:text-slate-300">访问量</span>
+      </div>
+    </div>
+  </div>
+</div>
+{{- end -}}

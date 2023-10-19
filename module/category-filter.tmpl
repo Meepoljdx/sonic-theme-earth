@@ -1,0 +1,54 @@
+{{- define  "meepo_earth/module/category-filter" -}}
+<ul id="filters" class="flex flex-wrap gap-2">
+  <li>
+    {{$categoryCount:=(getCategoryCount) }}
+    <a href="/" class="inline-flex cursor-pointer items-center rounded px-2 py-1 font-medium text-gray-500 transition-all hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-slate-50 {{ if not .category }}!text-gray-900 !bg-gray-100 dark:!bg-slate-700 dark:!text-slate-50{{ end }}">
+    <span class="truncate text-base"> 全部 </span>
+    </a>
+  </li>
+    {{ $categoryID:= 0 }}
+    {{ $categories:=listCategoryAsTree }}
+    {{ range $category:=$categories }}
+    <li
+      x-data="dropdown"
+      @mouseenter="open()"
+      @mouseleave="close()"
+      class="relative cursor-pointer transition-all"
+    >
+    <a
+        href="{{$category.FullPath}}"
+        class="inline-flex cursor-pointer items-center gap-1 rounded px-2 py-1 font-medium text-gray-500 transition-all hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-slate-50  {{ if and $.category (eq $.category.ID $category.ID) }}!text-gray-900 !bg-gray-100 dark:!bg-slate-700 dark:!text-slate-50{{ end }}"
+        >
+        <span class="truncate text-base">{{$category.Name}}</span>
+    {{/* 此处判断是否包含子分类, 有的话就展示展开箭头 */}}
+    {{if $category.Children}}
+        <span
+          class="i-tabler-chevron-right text-lg transition-all duration-300"
+          x-bind:class="show ? 'rotate-90' : ''"
+        ></span>
+    {{end}}
+    </a>
+    {{if $category.Children}}
+      <ul
+          @mouseenter="open()"
+          @mouseleave="close()"
+          x-show="show"
+          x-transition:enter="transition ease-out duration-100"
+          x-transition:enter-start="transform opacity-0 scale-95"
+          x-transition:enter-end="transform opacity-100 scale-100"
+          x-transition:leave="transition ease-in duration-75"
+          x-transition:leave-start="transform opacity-100 scale-100"
+          x-transition:leave-end="transform opacity-0 scale-95"
+          class="absolute left-0 z-10 mt-2 w-60 overflow-hidden rounded bg-white p-2 shadow dark:bg-slate-800"
+      >
+          
+          <li>
+          {{ template "meepo_earth/module/category-tree" $category }}
+          </li>
+      </ul>
+    {{end}}
+    </li>
+    {{end}}  
+</ul>
+
+{{- end -}}
