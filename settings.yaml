@@ -35,7 +35,7 @@ layout:
       name: header_background_image
       label: 首页顶部背景图片
       data-type: string
-      default: /themes/theme-earth/assets/images/default-background.png
+      default: /themes/sonic-theme-earth/assets/images/default-background.png
 
 style:
   label: 样式

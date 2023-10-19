@@ -19,9 +19,138 @@
 
 ![image-20231019155320668](https://meepoljd.oss-cn-hangzhou.aliyuncs.com/img/image-20231019155320668.png)
 
+包含了一个深色模式：
+
+![image-20231019161109635](https://meepoljd.oss-cn-hangzhou.aliyuncs.com/img/image-20231019161109635.png)
+
 ## 安装方法
 
 1. [点击](https://github.com/hooxuu/sonic-theme-Journal/archive/master.zip)下载。
 2. 进入后台 -> 外观 -> 主题。
 3. 点击右下方按钮选择安装主题，随后选择 `本地上传`。
 4. 选择下载好的主题包（zip）即可。
+
+## 说明
+
+侧边栏的功能有两个依赖于新增的模板函数，这个是我自己写的，如果要使用的话，需要自己添加进去：
+
+![image-20231019160937378](https://meepoljd.oss-cn-hangzhou.aliyuncs.com/img/image-20231019160937378.png)
+
+### 添加模板函数方式
+
+**近期文章**
+
+```go
+// 在template/extension/post.go中修改
+
+// 添加此方法
+func (p *postExtension) addListMostPopularPost() {
+	listMostPopularPost := func(top int) ([]*vo.Post, error) {
+		ctx := context.Background()
+		posts, _, err := p.PostService.Page(ctx, param.PostQuery{
+			Page: param.Page{
+				PageNum:  0,
+				PageSize: top,
+			},
+			Sort: &param.Sort{
+				Fields: []string{"visits,desc"},
+			},
+			Statuses: []*consts.PostStatus{consts.PostStatusPublished.Ptr()},
+		})
+		if err != nil {
+			return nil, err
+		}
+		return p.PostAssembler.ConvertToListVO(ctx, posts)
+	}
+	p.Template.AddFunc("listMostPopularPost", listMostPopularPost)
+}
+
+func RegisterPostFunc(template *template.Template, postService service.PostService, postTagService service.PostTagService, postCategoryService service.PostCategoryService, categoryService service.CategoryService, postAssembler assembler.PostAssembler, tagService service.TagService) {
+	p := &postExtension{
+		Template:            template,
+		PostService:         postService,
+		PostTagService:      postTagService,
+		PostCategoryService: postCategoryService,
+		CategoryService:     categoryService,
+		PostAssembler:       postAssembler,
+		TagService:          tagService,
+	}
+	p.addListLatestPost()
+	p.addGetPostCount()
+	p.addGetPostArchiveYear()
+	p.addGetPostArchiveMonth()
+	p.addListPostByCategoryID()
+	p.addListPostByCategorySlug()
+	p.addListPostByTagID()
+	p.addListPostByTagSlug()
+	p.addListMostPopularPost() // 添加此行
+}
+```
+
+**博客统计**
+
+```go
+// 在template/extension/statistic.go中修改，默认没有此文件，需要手动添加
+
+package extension
+
+import (
+	"context"
+
+	"github.com/go-sonic/sonic/model/dto"
+	"github.com/go-sonic/sonic/service"
+	"github.com/go-sonic/sonic/template"
+)
+
+type statisticExtension struct {
+	Template         *template.Template
+	StatisticService service.StatisticService
+}
+
+func RegisterStatisticFunc(template *template.Template, statisticService service.StatisticService) {
+	s := &statisticExtension{
+		Template:         template,
+		StatisticService: statisticService,
+	}
+	s.addGetStatisticsData()
+}
+
+func (s *statisticExtension) addGetStatisticsData() {
+	getStatisticsDataFunc := func() (*dto.Statistic, error) {
+		ctx := context.Background()
+		statistic, err := s.StatisticService.Statistic(ctx)
+		if err != nil {
+			return nil, err
+		}
+		return statistic, nil
+	}
+	s.Template.AddFunc("getStatisticsData", getStatisticsDataFunc)
+}
+```
+
+添加注册逻辑
+
+```go
+// 在main.go中添加
+		fx.Invoke(
+			listener.NewStartListener,
+			listener.NewTemplateConfigListener,
+			listener.NewLogEventListener,
+			listener.NewPostUpdateListener,
+			listener.NewCommentListener,
+			extension.RegisterCategoryFunc,
+			extension.RegisterCommentFunc,
+			extension.RegisterTagFunc,
+			extension.RegisterMenuFunc,
+			extension.RegisterPhotoFunc,
+			extension.RegisterLinkFunc,
+			extension.RegisterToolFunc,
+			extension.RegisterPaginationFunc,
+			extension.RegisterPostFunc,
+			extension.RegisterStatisticFunc, // 添加这一行
+			func(s *handler.Server) {
+				s.RegisterRouters()
+			},
+		),
+```
+
