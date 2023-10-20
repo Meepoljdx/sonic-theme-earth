@@ -1,3 +1,57 @@
 {{- define "meepo_earth/categories" -}} 
-  {{ template "meepo_earth/index" . }}
+<!DOCTYPE html>
+<html>
+  <head>
+    {{ template "meepo_earth/module/libs/import" . }}
+    <script>
+      main.initColorScheme({{ .settings.color_scheme}},{{ .settings.enable_change_color_scheme }})
+    </script>
+  </head>
+  <body class="bg-slate-50 dark:bg-slate-900">
+    {{ template "meepo_earth/module/header" . }}
+    {{ template "meepo_earth/module/hero" . }} 
+    <section class="container mx-auto mt-6 grid grid-cols-4 gap-6">
+      <div class="z-0 col-span-4 sm:col-span-3">
+        <div class="rounded-xl bg-white p-4 dark:bg-slate-800 md:grid-cols-2 xl:grid-cols-3">
+          <h1 class="mb-6 text-2xl font-medium dark:text-slate-50">全部分类</h1>
+          <div class="z-0 grid grid-cols-4 gap-4">
+            {{ $categories := listCategory }}
+            {{ range $category := $categories }}
+            <div class="z-0 col-span-1 sm:col-span-1">
+              <div class="ml-2 rounded border border-gray-300 bg-white shadow-sm hover:border-gray-400 hover:shadow dark:border-slate-600 dark:bg-slate-700 dark:hover:border-slate-700">
+                <div class="relative flex flex-col gap-2 p-4">
+                  <div class="flex min-w-0 flex-wrap items-center justify-between gap-4">
+                    <div class="col-span-1 flex flex-nowrap truncate">
+                      <a href="{{ $category.FullPath }}" title="{{ $category.Name }}">{{ $category.Name }}</a>
+                    </div>
+                    <div class="col-span-1 flex flex-nowrap truncate">
+                      <span class="rounded bg-gray-100 py-0.5 px-1 text-xs tabular-nums opacity-70 group-hover:bg-white dark:bg-slate-600 dark:text-slate-50 dark:group-hover:bg-slate-500">
+                      {{ $category.PostCount }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-span-1 col-start-1">
+                    <p
+                      class="truncate text-sm text-gray-600 dark:text-slate-100"
+                    >创建于 {{ unix_milli_time_format "2006-01-02" $category.CreateTime }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{ end }}
+            {{ if not $categories }}
+              <div class="mt-6 flex items-center justify-center">
+                <span class="text-sm font-light text-gray-600">当前没有分类</span>
+              </div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+      <aside class="z-0 col-span-1 hidden h-full flex-col gap-6 sm:flex">
+      {{ template "meepo_earth/module/_include/sidebar-post" .}}
+      </aside>
+    </section>
+    {{ template "meepo_earth/module/footer" . }}
+  </body>
+</html>
 {{- end -}}
