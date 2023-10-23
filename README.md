@@ -4,7 +4,7 @@
 
 该主题的原作者为 [halo-dev](https://github.com/halo-dev)，Halo官方社区；
 
-使用Go Template语法进行改写以适配[Sonic](https://github.com/go-sonic/sonic)，第一次写前端，边搜边改的，有一些已知的问题，比如没有**实现搜索插件**，~~然后**没法自动解析Markdown目录**。~~这个目前调整好了已经可以用了：
+使用Go Template语法进行改写以适配[Sonic](https://github.com/go-sonic/sonic)，第一次写前端，边搜边改的，有一些已知的问题，比如没有**实现搜索插件**，~~然后没法自动解析Markdown目录。~~ 这个目前调整好了已经可以用了：
 
 ![image-20231023120234208](https://meepoljd.oss-cn-hangzhou.aliyuncs.com/img/image-20231023120234208.png)
 
