@@ -67,28 +67,15 @@
       </ul>
       {{ end }}
     </div>
-    <!-- <div class="flex items-center">
+    <div class="flex items-center">
       <ul x-data="colorSchemeSwitcher" class="flex items-center gap-4">
         <li class="sm:hidden" x-on:click="open = true">
           <div
             class="i-tabler-menu-2 text-lg text-gray-600 hover:text-blue-600 dark:text-slate-100"
           ></div>
         </li>
-        <li
-          x-data="dropdown"
-          class="relative cursor-pointer transition-all"
-          @mouseenter="open()"
-          @mouseleave="close()"
-        >
-          <div
-            class="cursor-pointer text-lg text-gray-600 transition-all hover:text-blue-600 dark:text-slate-100"
-            :class="colorScheme.icon"
-            @click="[main.setColorScheme(nextColorScheme.value,true), currentValue = nextColorScheme.value]"
-            :title="`当前主题：${colorScheme.label}，点击切换为：${nextColorScheme.label}`"
-          ></div>
-        </li>
       </ul>
-    </div> -->
+    </div>
   </div>
   {{if $menu}}
   <div>
